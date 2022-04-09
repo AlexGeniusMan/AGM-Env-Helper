@@ -2,15 +2,6 @@ import os
 
 from dotenv import load_dotenv
 
-import time
-
-load_dotenv()
-
-
-def print_var(var_name, var_value):
-    # if
-    print(var_name, var_value)
-
 
 def get_env_var(var_type, var_name, debug):
     """
@@ -22,9 +13,11 @@ def get_env_var(var_type, var_name, debug):
     :return: environment variable value
     """
 
+    load_dotenv()
+
     var_value = os.getenv(var_name)
     if var_value is None:
-        raise ValueError(f"ERROR: {var_name} env variable type is None.")
+        raise ValueError(f"ERROR: {var_name} env variable value is None.")
 
     if debug:
         if len(var_name) > 39:
