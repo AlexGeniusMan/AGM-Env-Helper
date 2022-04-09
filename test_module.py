@@ -27,6 +27,9 @@ VARIABLE_FLOAT=1234.5678
     with pytest.raises(TypeError):
         get_env_var(bool, 'VARIABLE_STR', DEBUG)
 
+    with pytest.raises(TypeError):
+        get_env_var('lol', 'VARIABLE_STR', DEBUG)
+
     assert get_env_var(int, 'VARIABLE_INT', DEBUG) == 1234
     assert type(get_env_var(int, 'VARIABLE_INT', DEBUG)) == int
 

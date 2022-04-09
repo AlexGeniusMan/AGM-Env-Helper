@@ -2,6 +2,8 @@ import os
 
 from dotenv import load_dotenv
 
+import time
+
 load_dotenv()
 
 
@@ -16,7 +18,7 @@ def get_env_var(var_type, var_name, debug):
 
     :param var_type: str, int or float
     :param var_name: environment variable name, string
-    :param debug: decide to print secret data to output or not, bool
+    :param debug: decide to print environment variable value to output or not, bool
     :return: environment variable value
     """
 
@@ -36,14 +38,12 @@ def get_env_var(var_type, var_name, debug):
         print(f"{'{:39s}'.format(var_name_for_print)} {var_value_for_print}")
 
     try:
-        if var_type == str:
-            return var_value
-        elif var_type == int:
-            return int(var_value)
-        elif var_type == float:
-            return float(var_value)
-        else:
-            raise TypeError(f"ERROR: 'var_name' parameter is wrong. Parameter must be 'str', 'int' or 'float'.")
+        if var_type not in (str, int, float):
+            raise TypeError
+        return var_type(var_value)
     except ValueError:
         raise ValueError(
             f"ERROR: {var_name} env variable type is wrong. Type must be {var_type}. Current value: '{var_value}'")
+    except TypeError:
+        raise TypeError(
+            f"ERROR: 'var_name' parameter is wrong. Parameter must be <class 'str'>, <class 'int'> or <class 'float'>.")
