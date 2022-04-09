@@ -37,13 +37,14 @@ def get_env_var(var_type, var_name, debug):
             var_value_for_print = var_value
         print(f"{'{:39s}'.format(var_name_for_print)} {var_value_for_print}")
 
+    allowed_types = (str, int, float)
     try:
-        if var_type not in (str, int, float):
+        if var_type not in allowed_types:
             raise TypeError
         return var_type(var_value)
     except ValueError:
         raise ValueError(
-            f"ERROR: {var_name} env variable type is wrong. Type must be {var_type}. Current value: '{var_value}'")
+            f"ERROR: {var_name} env variable type is wrong. Type must be {var_type}. Current value: '{var_value}'.")
     except TypeError:
         raise TypeError(
-            f"ERROR: 'var_name' parameter is wrong. Parameter must be <class 'str'>, <class 'int'> or <class 'float'>.")
+            f"ERROR: 'var_name' parameter is wrong. Parameter must be {' or '.join([str(e) for e in allowed_types])}.")
